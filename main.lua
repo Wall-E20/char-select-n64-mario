@@ -257,34 +257,27 @@ local sound_table_different = {
 }
 
 
---yahhoo < 230 - O
---herewego < 430 - O
-
---okeidokei > 300 - O
--- < 200 & > 70 - O
-
---tired
--- > 425 - A
--- < 425 & > 345 - O
--- < 345 & > 150 - A
--- < 150 - O
-
-gPlayerSyncTable[0].talk_timer = 0
-
+-- mouth ids:
 -- 9  mouth open happy
 -- 10 hurt / scared (Not dead)
 -- 11 water / conentred
 -- 12 mouth open O
 
+
+gPlayerSyncTable[0].talk_timer = 0
 gPlayerSyncTable[0].mouth_id = 9
 gPlayerSyncTable[0].last_sound_id = nil
 
 
 local function mario_talk(m)
+
     local m = gMarioStates[0]
     local s = gPlayerSyncTable[m.playerIndex]
+    
     for i, char in pairs(characterTable) do
         local _ENV = setmetatable(char, { __index = _G })
+
+        
         if s.talk_timer > 0 then
             --djui_chat_message_create(tostring(s.talk_timer))
             s.talk_timer = s.talk_timer - 1
@@ -347,10 +340,9 @@ hook_event(HOOK_ON_PLAY_SOUND, function(sound, pos)
     if m then
         local s = gPlayerSyncTable[m.playerIndex]
         if sounds_time_table[sound] ~= nil then
+
             for i, char in pairs(characterTable) do
                 local _ENV = setmetatable(char, { __index = _G })
-
-                --m.marioBodyState.eyeState = 12
                 s.talk_timer = sounds_time_table[sound] * multiplier
                 if charSelect.character_get_current_number(m.playerIndex) == tablePos then
                     s.mouth_id = sounds_mouth_id[sound]
@@ -369,16 +361,18 @@ local function on_mario_update(m)
             if ((m.action & ACT_FLAG_WATER_OR_TEXT) ~= 0) or ((m.action & ACT_FLAG_METAL_WATER) ~= 0) then
                 m.marioBodyState.eyeState = 11
             end
+
             --idk if i will work more on this but i planned a select animation
+            --[[
             if charSelect.is_menu_open() == true then
                 if (m.controller.buttonPressed & A_BUTTON) ~= 0 then
                     set_mario_animation(m, MARIO_ANIM_CREDITS_WAVING)
                 end
             end
-            --
+            --]]
 
             --this code is for testing voice lines
-
+            --[[
             if (m.controller.buttonPressed & D_JPAD) ~= 0 then
                 play_mario_sound(m, SOUND_MARIO_HERE_WE_GO, SOUND_MARIO_HERE_WE_GO)
             end
