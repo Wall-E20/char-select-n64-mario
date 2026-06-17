@@ -71,26 +71,25 @@ E_MODEL_N64MARIO_W20 = smlua_model_util_get_id("n64_mario_geo")
 
 -- This function loads and applies Character Data based on the table above, does not need to be touched
 local function on_character_select_load()
-
-        CT_N64MARIO_W20 = _G.charSelect.character_add(
-        "N64 Mario", 
-        "Mario if he was accurate to his renders!", 
-        "Wall_E20", 
-        { r = 255, g = 10, b = 10 }, 
-        E_MODEL_N64MARIO_W20, 
-        CT_MARIO, 
-        get_texture_info("mario-n64"), 
+    CT_N64MARIO_W20 = _G.charSelect.character_add(
+        "N64 Mario",
+        "Mario if he was accurate to his renders!",
+        "Wall_E20",
+        { r = 255, g = 10, b = 10 },
+        E_MODEL_N64MARIO_W20,
+        CT_MARIO,
+        get_texture_info("mario-n64"),
         1)
 
-        _G.charSelect.character_set_nickname(CT_N64MARIO_W20, "Mario", true)
-        -- if caps then character_add_caps(model, caps) end
+    _G.charSelect.character_set_nickname(CT_N64MARIO_W20, "Mario", true)
+    -- if caps then character_add_caps(model, caps) end
 
-        _G.charSelect.character_add_palette_preset(E_MODEL_N64MARIO_W20, pal_mario_cs, "Default")
+    _G.charSelect.character_add_palette_preset(E_MODEL_N64MARIO_W20, pal_mario_cs, "Default")
 
-        --charSelect.character_set_category(tablePos, TEXT_PACK_NAME)
-        _G.charSelect.character_add_graffiti(CT_N64MARIO_W20, get_texture_info("mario-n64"))
+    --charSelect.character_set_category(tablePos, TEXT_PACK_NAME)
+    _G.charSelect.character_add_graffiti(CT_N64MARIO_W20, get_texture_info("mario-n64"))
 
-        _G.charSelect.character_add_animations(E_MODEL_N64MARIO_W20, table_anims_cs, table_eye_cs, nil)
+    _G.charSelect.character_add_animations(E_MODEL_N64MARIO_W20, table_anims_cs, table_eye_cs, nil)
 end
 
 hook_event(HOOK_ON_MODS_LOADED, on_character_select_load)
@@ -237,44 +236,43 @@ local function mario_talk(m)
     local m = gMarioStates[0]
     local s = gPlayerSyncTable[m.playerIndex]
 
-    for i, char in pairs(characterTable) do
-        if s.talk_timer > 0 then
-            --djui_chat_message_create(tostring(s.talk_timer))
-            s.talk_timer = s.talk_timer - 1
-            if _G.charSelect.character_get_current_number(m.playerIndex) == char.tablePos then
-                if sound_table_different[s.last_sound_id] == 1 then
-                    if s.talk_timer < 250 then
-                        m.marioBodyState.eyeState = s.mouth_id
-                    else
-                        m.marioBodyState.eyeState = 9
-                    end
-                elseif sound_table_different[s.last_sound_id] == 2 then
-                    if s.talk_timer < 430 or (s.talk_timer < 600 and s.talk_timer > 500) then
-                        m.marioBodyState.eyeState = s.mouth_id
-                    else
-                        m.marioBodyState.eyeState = 9
-                    end
-                elseif sound_table_different[s.last_sound_id] == 3 then
-                    if s.talk_timer > 120 then
-                        m.marioBodyState.eyeState = s.mouth_id
-                    else
-                        m.marioBodyState.eyeState = 12
-                    end
-                elseif sound_table_different[s.last_sound_id] == 4 then
-                    if s.talk_timer > 300 or (s.talk_timer < 200 and s.talk_timer > 70) then
-                        m.marioBodyState.eyeState = s.mouth_id
-                    else
-                        m.marioBodyState.eyeState = 9
-                    end
-                elseif sound_table_different[s.last_sound_id] == 5 then
-                    if s.talk_timer < 150 or (s.talk_timer < 425 and s.talk_timer > 345) then
-                        m.marioBodyState.eyeState = s.mouth_id
-                    else
-                        m.marioBodyState.eyeState = 9
-                    end
-                else
+
+    if s.talk_timer > 0 then
+        --djui_chat_message_create(tostring(s.talk_timer))
+        s.talk_timer = s.talk_timer - 1
+        if _G.charSelect.character_get_current_number(m.playerIndex) == CT_N64MARIO_W20 then
+            if sound_table_different[s.last_sound_id] == 1 then
+                if s.talk_timer < 250 then
                     m.marioBodyState.eyeState = s.mouth_id
+                else
+                    m.marioBodyState.eyeState = 9
                 end
+            elseif sound_table_different[s.last_sound_id] == 2 then
+                if s.talk_timer < 430 or (s.talk_timer < 600 and s.talk_timer > 500) then
+                    m.marioBodyState.eyeState = s.mouth_id
+                else
+                    m.marioBodyState.eyeState = 9
+                end
+            elseif sound_table_different[s.last_sound_id] == 3 then
+                if s.talk_timer > 120 then
+                    m.marioBodyState.eyeState = s.mouth_id
+                else
+                    m.marioBodyState.eyeState = 12
+                end
+            elseif sound_table_different[s.last_sound_id] == 4 then
+                if s.talk_timer > 300 or (s.talk_timer < 200 and s.talk_timer > 70) then
+                    m.marioBodyState.eyeState = s.mouth_id
+                else
+                    m.marioBodyState.eyeState = 9
+                end
+            elseif sound_table_different[s.last_sound_id] == 5 then
+                if s.talk_timer < 150 or (s.talk_timer < 425 and s.talk_timer > 345) then
+                    m.marioBodyState.eyeState = s.mouth_id
+                else
+                    m.marioBodyState.eyeState = 9
+                end
+            else
+                m.marioBodyState.eyeState = s.mouth_id
             end
         end
     end
@@ -300,12 +298,10 @@ hook_event(HOOK_ON_PLAY_SOUND, function(sound, pos)
     if m then
         local s = gPlayerSyncTable[m.playerIndex]
         if sounds_time_table[sound] ~= nil then
-            for i, char in pairs(characterTable) do
-                s.talk_timer = sounds_time_table[sound] * multiplier
-                if _G.charSelect.character_get_current_number(m.playerIndex) == char.tablePos then
-                    s.mouth_id = sounds_mouth_id[sound]
-                    s.last_sound_id = sound
-                end
+            s.talk_timer = sounds_time_table[sound] * multiplier
+            if _G.charSelect.character_get_current_number(m.playerIndex) == CT_N64MARIO_W20 then
+                s.mouth_id = sounds_mouth_id[sound]
+                s.last_sound_id = sound
             end
         end
     end
@@ -313,14 +309,13 @@ end)
 
 
 local function on_mario_update(m)
-    for i, char in pairs(characterTable) do
-        if _G.charSelect.character_get_current_number(m.playerIndex) == char.tablePos then
-            if ((m.action & ACT_FLAG_WATER_OR_TEXT) ~= 0) or ((m.action & ACT_FLAG_METAL_WATER) ~= 0) then
-                m.marioBodyState.eyeState = 11
-            end
+    if _G.charSelect.character_get_current_number(m.playerIndex) == CT_N64MARIO_W20 then
+        if ((m.action & ACT_FLAG_WATER_OR_TEXT) ~= 0) or ((m.action & ACT_FLAG_METAL_WATER) ~= 0) then
+            m.marioBodyState.eyeState = 11
+        end
 
-            --idk if i will work more on this but i planned a select animation
-            --[[
+        --idk if i will work more on this but i planned a select animation
+        --[[
             if charSelect.is_menu_open() == true then
                 if (m.controller.buttonPressed & A_BUTTON) ~= 0 then
                     set_mario_animation(m, MARIO_ANIM_CREDITS_WAVING)
@@ -328,8 +323,8 @@ local function on_mario_update(m)
             end
             --]]
 
-            --this code is for testing voice lines
-            --[[
+        --this code is for testing voice lines
+        --[[
             if (m.controller.buttonPressed & D_JPAD) ~= 0 then
                 play_mario_sound(m, SOUND_MARIO_HERE_WE_GO, SOUND_MARIO_HERE_WE_GO)
             end
@@ -343,7 +338,6 @@ local function on_mario_update(m)
                 play_mario_sound(m, SOUND_MARIO_OKEY_DOKEY, SOUND_MARIO_OKEY_DOKEY)
             end
             --]]
-        end
     end
 end
 hook_event(HOOK_MARIO_UPDATE, on_mario_update)
