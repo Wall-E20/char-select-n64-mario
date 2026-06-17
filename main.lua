@@ -94,7 +94,7 @@ end
 
 hook_event(HOOK_ON_MODS_LOADED, on_character_select_load)
 
-for i = 0, MAX_PLAYERS-1 do
+for i = 0, MAX_PLAYERS - 1 do
     gPlayerSyncTable[i].talk_timer = 0
     gPlayerSyncTable[0].mouth_id = 9
     gPlayerSyncTable[0].last_sound_id = nil
@@ -158,8 +158,8 @@ local sounds_time_table = {
 }
 local sounds_mouth_id = {
     [SOUND_MARIO_YAH_WAH_HOO] = 9,
-    [SOUND_MARIO_YAH_WAH_HOO + (2 << 16)] = 12, -- WAH
-    [SOUND_MARIO_YAH_WAH_HOO + (1 << 16)] = 9,  -- HOO
+    [SOUND_MARIO_YAH_WAH_HOO + (2 << 16)] = 12, -- HOO ???
+    [SOUND_MARIO_YAH_WAH_HOO + (1 << 16)] = 9,  -- WAH
     [SOUND_MARIO_HOOHOO] = 12,
     [SOUND_MARIO_YAHOO] = 12,
     [SOUND_MARIO_UH] = 12,
@@ -233,14 +233,14 @@ local sound_table_different = {
 
 
 local function mario_talk(m)
-
     local s = gPlayerSyncTable[m.playerIndex]
 
     if s.talk_timer > 0 then
-        --djui_chat_message_create(tostring(s.talk_timer))
-
-        s.talk_timer = s.talk_timer - 15
-        -- before adding syncing the timers went all very fast even if did - 1, 
+        if m.playerIndex == 0 then
+            --djui_chat_message_create(tostring(s.talk_timer))
+            s.talk_timer = s.talk_timer - 15
+        end
+        -- before adding syncing the timers went all very fast even if did - 1,
         --now i figured out it did go -1 for every player (even if not connected) and now is fixed, but i didnt want to redo all the tables again
         --so i just readded the - 1 for all of the 15 players so i dont have to redo the timers
 
@@ -302,27 +302,24 @@ hook_event(HOOK_ON_PLAY_SOUND, function(sound, pos)
     if m then
         local s = gPlayerSyncTable[m.playerIndex]
         if sounds_time_table[sound] ~= nil then
-
-                s.talk_timer = sounds_time_table[sound] * multiplier
-                if _G.charSelect.character_get_current_number(m.playerIndex) == CT_N64MARIO_W20 then
-                    s.mouth_id = sounds_mouth_id[sound]
-                    s.last_sound_id = sound
-                end
+            s.talk_timer = sounds_time_table[sound] * multiplier
+            if _G.charSelect.character_get_current_number(m.playerIndex) == CT_N64MARIO_W20 then
+                s.mouth_id = sounds_mouth_id[sound]
+                s.last_sound_id = sound
             end
-        
+        end
     end
 end)
 
 
 local function on_mario_update(m)
+    if _G.charSelect.character_get_current_number(m.playerIndex) == CT_N64MARIO_W20 then
+        if ((m.action & ACT_FLAG_WATER_OR_TEXT) ~= 0) or ((m.action & ACT_FLAG_METAL_WATER) ~= 0) then
+            m.marioBodyState.eyeState = 11
+        end
 
-        if _G.charSelect.character_get_current_number(m.playerIndex) == CT_N64MARIO_W20 then
-            if ((m.action & ACT_FLAG_WATER_OR_TEXT) ~= 0) or ((m.action & ACT_FLAG_METAL_WATER) ~= 0) then
-                m.marioBodyState.eyeState = 11
-            end
-
-            --idk if i will work more on this but i planned a select animation
-            --[[
+        --idk if i will work more on this but i planned a select animation
+        --[[
             if charSelect.is_menu_open() == true then
                 if (m.controller.buttonPressed & A_BUTTON) ~= 0 then
                     set_mario_animation(m, MARIO_ANIM_CREDITS_WAVING)
@@ -330,8 +327,8 @@ local function on_mario_update(m)
             end
             --]]
 
-            --this code is for testing voice lines
-            --[[
+        --this code is for testing voice lines
+        
             if (m.controller.buttonPressed & D_JPAD) ~= 0 then
                 play_mario_sound(m, SOUND_MARIO_HERE_WE_GO, SOUND_MARIO_HERE_WE_GO)
             end
@@ -344,8 +341,7 @@ local function on_mario_update(m)
             if (m.controller.buttonPressed & R_JPAD) ~= 0 then
             play_mario_sound(m, SOUND_MARIO_OKEY_DOKEY, SOUND_MARIO_OKEY_DOKEY)
             end
-            --]]
-        
+            
     end
 end
 
