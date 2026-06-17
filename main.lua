@@ -345,14 +345,14 @@ end
 hook_event(HOOK_ON_PLAY_SOUND, function(sound, pos)
     local m = get_mario_state_on_play_sound(pos)
     if m then
-        local ms = gMarioStates[0]
-        local s = gPlayerSyncTable[ms.playerIndex]
-        for i, char in pairs(characterTable) do
-            local _ENV = setmetatable(char, { __index = _G })
-            if sounds_time_table[sound] ~= nil then
+        local s = gPlayerSyncTable[m.playerIndex]
+        if sounds_time_table[sound] ~= nil then
+            for i, char in pairs(characterTable) do
+                local _ENV = setmetatable(char, { __index = _G })
+
                 --m.marioBodyState.eyeState = 12
                 s.talk_timer = sounds_time_table[sound] * multiplier
-                if charSelect.character_get_current_number(ms.playerIndex) == tablePos then
+                if charSelect.character_get_current_number(m.playerIndex) == tablePos then
                     s.mouth_id = sounds_mouth_id[sound]
                     s.last_sound_id = sound
                 end
