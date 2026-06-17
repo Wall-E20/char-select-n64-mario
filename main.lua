@@ -90,7 +90,7 @@ local function on_character_select_load()
         --charSelect.character_set_category(tablePos, TEXT_PACK_NAME)
         _G.charSelect.character_add_graffiti(CT_N64MARIO_W20, get_texture_info("mario-n64"))
 
-        _G.charSelect.character_add_animations(E_MODEL_N64MARIO_W20, table_anims_cs, table_eye_cs, nil) end
+        _G.charSelect.character_add_animations(E_MODEL_N64MARIO_W20, table_anims_cs, table_eye_cs, nil)
 end
 
 hook_event(HOOK_ON_MODS_LOADED, on_character_select_load)
