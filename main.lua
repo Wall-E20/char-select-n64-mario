@@ -238,7 +238,12 @@ local function mario_talk(m)
 
     if s.talk_timer > 0 then
         --djui_chat_message_create(tostring(s.talk_timer))
-        s.talk_timer = s.talk_timer - 1
+
+        s.talk_timer = s.talk_timer - 15
+        -- before adding syncing the timers went all very fast even if did - 1, 
+        --now i figured out it did go -1 for every player (even if not connected) and now is fixed, but i didnt want to redo all the tables again
+        --so i just readded the - 1 for all of the 15 players so i dont have to redo the timers
+
         if _G.charSelect.character_get_current_number(m.playerIndex) == CT_N64MARIO_W20 then
             if sound_table_different[s.last_sound_id] == 1 then
                 if s.talk_timer < 250 then
