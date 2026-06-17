@@ -13,70 +13,37 @@ if not charSelect then
     return
 end
 
+local pal_mario_cs = {
+    [PANTS]  = { r = 0x0b, g = 0x00, b = 0x99 },
+    [SHIRT]  = { r = 0xe1, g = 0x00, b = 0x00 },
+    [GLOVES] = { r = 0xff, g = 0xff, b = 0xff },
+    [SHOES]  = { r = 0x9c, g = 0x2c, b = 0x00 },
+    [HAIR]   = { r = 0x59, g = 0x21, b = 0x00 },
+    [SHOES]  = { r = 0x9c, g = 0x2c, b = 0x00 },
+    [SKIN]   = { r = 0xff, g = 0x98, b = 0x59 },
+    [CAP]    = { r = 0xe1, g = 0x00, b = 0x00 },
+    [EMBLEM] = { r = 0xe1, g = 0x00, b = 0x00 },
+}
+local table_anims_cs = {
 
-characterTable = {
-    {
+    [_G.charSelect.CS_ANIM_MENU] = 'n64mar_menupose',
+}
 
-        name = "N64 Mario",
-        nickname = "Mario",
-        description = "Mario if he was accurate to his renders!",
-        credits = "Wall_E20",
-        color = { r = 255, g = 10, b = 10 },
-        model = smlua_model_util_get_id("n64_mario_geo"),
-        forceChar = CT_MARIO,
-        lifeIcon = get_texture_info("mario-n64"),
-        camScale = 1,
+local table_eye_cs = {
+    [CHAR_ANIM_TWIRL] = 9,
+    [CHAR_ANIM_THROW_LIGHT_OBJECT] = 9,
+    [CHAR_ANIM_CREDITS_WAVING] = 9,
+    [CHAR_ANIM_SUMMON_STAR] = 9,
+    [CHAR_ANIM_TRIPLE_JUMP_FLY] = 9,
+    [CHAR_ANIM_FLY_FROM_CANNON] = 9,
+    [CHAR_ANIM_WING_CAP_FLY] = 9,
+    [CHAR_ANIM_CREDITS_PEACE_SIGN] = 9,
+    [CHAR_ANIM_FINAL_BOWSER_RAISE_HAND_SPIN] = 9,
+    [CHAR_ANIM_FINAL_BOWSER_WING_CAP_TAKE_OFF] = 9,
+    [CHAR_ANIM_TAKE_CAP_OFF_THEN_ON] = 9,
+    [CHAR_ANIM_PUT_CAP_ON] = 12,
 
-        graffiti = get_texture_info("mario-n64"),
-
-        --[[
-        -- Cap Models (Not In Template)
-        caps = {
-            normal = smlua_model_util_get_id("custom_cap_geo"),
-            wing = smlua_model_util_get_id("custom_wing_cap_geo"),
-            metal = smlua_model_util_get_id("custom_metal_cap_geo"),
-            metalWing = smlua_model_util_get_id("custom_metal_wing_cap_geo")
-        },
-        ]]
-
-        -- Character Palettes
-        palettes = {
-            {
-                name     = "Default",
-                [PANTS]  = { r = 0x0b, g = 0x00, b = 0x99 },
-                [SHIRT]  = { r = 0xe1, g = 0x00, b = 0x00 },
-                [GLOVES] = { r = 0xff, g = 0xff, b = 0xff },
-                [SHOES]  = { r = 0x9c, g = 0x2c, b = 0x00 },
-                [HAIR]   = { r = 0x59, g = 0x21, b = 0x00 },
-                [SHOES]  = { r = 0x9c, g = 0x2c, b = 0x00 },
-                [SKIN]   = { r = 0xff, g = 0x98, b = 0x59 },
-                [CAP]    = { r = 0xe1, g = 0x00, b = 0x00 },
-                [EMBLEM] = { r = 0xe1, g = 0x00, b = 0x00 },
-            },
-        },
-        -- Replaces Vanilla Animations or Adds Custom Animations.
-        anims = {
-            -- CS Menu Anim Pose
-            [charSelect.CS_ANIM_MENU] = 'n64mar_menupose',
-        },
-
-        eyes = {
-            [charSelect.CS_ANIM_MENU] = 9,
-
-            [CHAR_ANIM_TWIRL] = 9,
-            [CHAR_ANIM_THROW_LIGHT_OBJECT] = 9,
-            [CHAR_ANIM_CREDITS_WAVING] = 9,
-            [CHAR_ANIM_SUMMON_STAR] = 9,
-            [CHAR_ANIM_TRIPLE_JUMP_FLY] = 9,
-            [CHAR_ANIM_FLY_FROM_CANNON] = 9,
-            [CHAR_ANIM_WING_CAP_FLY] = 9,
-            [CHAR_ANIM_CREDITS_PEACE_SIGN] = 9,
-            [CHAR_ANIM_FINAL_BOWSER_RAISE_HAND_SPIN] = 9,
-            [CHAR_ANIM_FINAL_BOWSER_WING_CAP_TAKE_OFF] = 9,
-            [CHAR_ANIM_TAKE_CAP_OFF_THEN_ON] = 9,
-            [CHAR_ANIM_PUT_CAP_ON] = 12,
-
-            --[[
+    --[[
             [CHAR_ANIM_FORWARD_KB] = 10,
             [CHAR_ANIM_BACKWARD_KB] = 10,
             [CHAR_ANIM_SOFT_BACK_KB] = 10,
@@ -86,47 +53,44 @@ characterTable = {
             [CHAR_ANIM_WATER_FORWARD_KB] = 10,
             [CHAR_ANIM_BACKWARDS_WATER_KB] = 10,
             --]]
-            [CHAR_ANIM_BEING_GRABBED] = 10,
-            [CHAR_ANIM_HEAD_STUCK_IN_GROUND] = 10,
-            [CHAR_ANIM_LEGS_STUCK_IN_GROUND] = 10,
-            [CHAR_ANIM_BOTTOM_STUCK_IN_GROUND] = 10,
-            [CHAR_ANIM_SHOCKED] = 10,
-            [CHAR_ANIM_IDLE_HEAVY_OBJ] = 11,
-            [CHAR_ANIM_WALK_WITH_HEAVY_OBJ] = 11,
-            [CHAR_ANIM_FALL_OVER_BACKWARDS] = 11,
-            [CHAR_ANIM_LAND_ON_STOMACH] = 10,
+    [CHAR_ANIM_BEING_GRABBED] = 10,
+    [CHAR_ANIM_HEAD_STUCK_IN_GROUND] = 10,
+    [CHAR_ANIM_LEGS_STUCK_IN_GROUND] = 10,
+    [CHAR_ANIM_BOTTOM_STUCK_IN_GROUND] = 10,
+    [CHAR_ANIM_SHOCKED] = 10,
+    [CHAR_ANIM_IDLE_HEAVY_OBJ] = 11,
+    [CHAR_ANIM_WALK_WITH_HEAVY_OBJ] = 11,
+    [CHAR_ANIM_FALL_OVER_BACKWARDS] = 11,
+    [CHAR_ANIM_LAND_ON_STOMACH] = 10,
 
-            [charSelect.CS_ANIM_MENU] = MARIO_EYES_LOOK_LEFT
-        },
-
-        hands = {
-            -- [charSelect.CS_ANIM_MENU] = MARIO_HAND_OPEN,
-        },
-    },
-
+    [_G.charSelect.CS_ANIM_MENU] = MARIO_EYES_LOOK_LEFT
 }
+
+
+E_MODEL_N64MARIO_W20 = smlua_model_util_get_id("n64_mario_geo")
 
 -- This function loads and applies Character Data based on the table above, does not need to be touched
 local function on_character_select_load()
-    for i, char in pairs(characterTable) do
-        local _ENV = setmetatable(char, { __index = _G })
-        tablePos = charSelect.character_add(name, description, credits, color, model, forceChar, lifeIcon, camScale)
 
-        charSelect.character_set_nickname(tablePos, nickname, true)
+        CT_N64MARIO_W20 = _G.charSelect.character_add(
+        "N64 Mario", 
+        "Mario if he was accurate to his renders!", 
+        "Wall_E20", 
+        { r = 255, g = 10, b = 10 }, 
+        E_MODEL_N64MARIO_W20, 
+        CT_MARIO, 
+        get_texture_info("mario-n64"), 
+        1)
+
+        _G.charSelect.character_set_nickname(CT_N64MARIO_W20, "Mario", true)
         -- if caps then character_add_caps(model, caps) end
-        if voices then charSelect.character_add_voice(model, voices) end
-        if palettes then
-            for i = 1, #palettes do
-                charSelect.character_add_palette_preset(model, palettes[i], palettes[i].name)
-            end
-        end
+
+        _G.charSelect.character_add_palette_preset(E_MODEL_N64MARIO_W20, pal_mario_cs, "Default")
+
         --charSelect.character_set_category(tablePos, TEXT_PACK_NAME)
-        charSelect.character_add_graffiti(tablePos, graffiti)
+        _G.charSelect.character_add_graffiti(CT_N64MARIO_W20, get_texture_info("mario-n64"))
 
-        if anims then charSelect.character_add_animations(model, anims, eyes, hands) end
-
-        if meter then charSelect.character_add_health_meter(tablePos, meter) end
-    end
+        _G.charSelect.character_add_animations(E_MODEL_N64MARIO_W20, table_anims_cs, table_eye_cs, nil) end
 end
 
 hook_event(HOOK_ON_MODS_LOADED, on_character_select_load)
@@ -270,18 +234,14 @@ gPlayerSyncTable[0].last_sound_id = nil
 
 
 local function mario_talk(m)
-
     local m = gMarioStates[0]
     local s = gPlayerSyncTable[m.playerIndex]
-    
-    for i, char in pairs(characterTable) do
-        local _ENV = setmetatable(char, { __index = _G })
 
-        
+    for i, char in pairs(characterTable) do
         if s.talk_timer > 0 then
             --djui_chat_message_create(tostring(s.talk_timer))
             s.talk_timer = s.talk_timer - 1
-            if charSelect.character_get_current_number(m.playerIndex) == tablePos then
+            if _G.charSelect.character_get_current_number(m.playerIndex) == char.tablePos then
                 if sound_table_different[s.last_sound_id] == 1 then
                     if s.talk_timer < 250 then
                         m.marioBodyState.eyeState = s.mouth_id
@@ -340,11 +300,9 @@ hook_event(HOOK_ON_PLAY_SOUND, function(sound, pos)
     if m then
         local s = gPlayerSyncTable[m.playerIndex]
         if sounds_time_table[sound] ~= nil then
-
             for i, char in pairs(characterTable) do
-                local _ENV = setmetatable(char, { __index = _G })
                 s.talk_timer = sounds_time_table[sound] * multiplier
-                if charSelect.character_get_current_number(m.playerIndex) == tablePos then
+                if _G.charSelect.character_get_current_number(m.playerIndex) == char.tablePos then
                     s.mouth_id = sounds_mouth_id[sound]
                     s.last_sound_id = sound
                 end
@@ -356,8 +314,7 @@ end)
 
 local function on_mario_update(m)
     for i, char in pairs(characterTable) do
-        local _ENV = setmetatable(char, { __index = _G })
-        if charSelect.character_get_current_number(m.playerIndex) == tablePos then
+        if _G.charSelect.character_get_current_number(m.playerIndex) == char.tablePos then
             if ((m.action & ACT_FLAG_WATER_OR_TEXT) ~= 0) or ((m.action & ACT_FLAG_METAL_WATER) ~= 0) then
                 m.marioBodyState.eyeState = 11
             end
