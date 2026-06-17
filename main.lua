@@ -328,7 +328,7 @@ local function on_mario_update(m)
             --]]
 
         --this code is for testing voice lines
-        
+        --[[
             if (m.controller.buttonPressed & D_JPAD) ~= 0 then
                 play_mario_sound(m, SOUND_MARIO_HERE_WE_GO, SOUND_MARIO_HERE_WE_GO)
             end
@@ -341,7 +341,7 @@ local function on_mario_update(m)
             if (m.controller.buttonPressed & R_JPAD) ~= 0 then
             play_mario_sound(m, SOUND_MARIO_OKEY_DOKEY, SOUND_MARIO_OKEY_DOKEY)
             end
-            
+            --]]
     end
 end
 
