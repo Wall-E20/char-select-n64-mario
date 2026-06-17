@@ -348,4 +348,5 @@ local function on_mario_update(m)
         
     end
 end
+
 hook_event(HOOK_MARIO_UPDATE, on_mario_update)
