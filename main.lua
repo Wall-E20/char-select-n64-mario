@@ -67,6 +67,24 @@ local table_eye_cs = {
 }
 
 
+local HEALTH_N64MARIO_W20 = {
+    label = {
+        left = get_texture_info("power_meter_left_side"),
+        right = get_texture_info("power_meter_right_side"),
+    },
+    pie = {
+        [1] = get_texture_info("power_meter_one"),
+        [2] = get_texture_info("power_meter_two"),
+        [3] = get_texture_info("power_meter_three"),
+        [4] = get_texture_info("power_meter_four"),
+        [5] = get_texture_info("power_meter_five"),
+        [6] = get_texture_info("power_meter_six"),
+        [7] = get_texture_info("power_meter_seven"),
+        [8] = get_texture_info("power_meter_full"),
+    }
+}
+
+
 E_MODEL_N64MARIO_W20 = smlua_model_util_get_id("n64_mario_geo")
 
 -- This function loads and applies Character Data based on the table above, does not need to be touched
@@ -82,14 +100,15 @@ local function on_character_select_load()
         1)
 
     _G.charSelect.character_set_nickname(CT_N64MARIO_W20, "Mario", true)
-    -- if caps then character_add_caps(model, caps) end
 
     _G.charSelect.character_add_palette_preset(E_MODEL_N64MARIO_W20, pal_mario_cs, "Default")
 
-    --charSelect.character_set_category(tablePos, TEXT_PACK_NAME)
     _G.charSelect.character_add_graffiti(CT_N64MARIO_W20, get_texture_info("mario-n64"))
 
     _G.charSelect.character_add_animations(E_MODEL_N64MARIO_W20, table_anims_cs, table_eye_cs, nil)
+
+    _G.charSelect.character_add_costume_health_meter(CT_N64MARIO_W20, 1, HEALTH_N64MARIO_W20)
+
 end
 
 hook_event(HOOK_ON_MODS_LOADED, on_character_select_load)
