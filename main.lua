@@ -63,9 +63,46 @@ local table_eye_cs = {
     [CHAR_ANIM_FALL_OVER_BACKWARDS] = 11,
     [CHAR_ANIM_LAND_ON_STOMACH] = 10,
 
+    [_G.charSelect.CS_ANIM_MENU] = MARIO_EYES_LOOK_RIGHT
+}
+
+local table_hands_cs = {
+    [_G.charSelect.CS_ANIM_MENU] = MARIO_HAND_RIGHT_OPEN
+}
+
+local table_anims2_cs = {
+
+    [_G.charSelect.CS_ANIM_MENU] = 'n64mar_menupose2',
+}
+local table_eye2_cs = {
+    [CHAR_ANIM_TWIRL] = 9,
+    [CHAR_ANIM_THROW_LIGHT_OBJECT] = 9,
+    [CHAR_ANIM_CREDITS_WAVING] = 9,
+    [CHAR_ANIM_SUMMON_STAR] = 9,
+    [CHAR_ANIM_TRIPLE_JUMP_FLY] = 9,
+    [CHAR_ANIM_FLY_FROM_CANNON] = 9,
+    [CHAR_ANIM_WING_CAP_FLY] = 9,
+    [CHAR_ANIM_CREDITS_PEACE_SIGN] = 9,
+    [CHAR_ANIM_FINAL_BOWSER_RAISE_HAND_SPIN] = 9,
+    [CHAR_ANIM_FINAL_BOWSER_WING_CAP_TAKE_OFF] = 9,
+    [CHAR_ANIM_TAKE_CAP_OFF_THEN_ON] = 9,
+    [CHAR_ANIM_PUT_CAP_ON] = 12,
+    [CHAR_ANIM_BEING_GRABBED] = 10,
+    [CHAR_ANIM_HEAD_STUCK_IN_GROUND] = 10,
+    [CHAR_ANIM_LEGS_STUCK_IN_GROUND] = 10,
+    [CHAR_ANIM_BOTTOM_STUCK_IN_GROUND] = 10,
+    [CHAR_ANIM_SHOCKED] = 10,
+    [CHAR_ANIM_IDLE_HEAVY_OBJ] = 11,
+    [CHAR_ANIM_WALK_WITH_HEAVY_OBJ] = 11,
+    [CHAR_ANIM_FALL_OVER_BACKWARDS] = 11,
+    [CHAR_ANIM_LAND_ON_STOMACH] = 10,
+
     [_G.charSelect.CS_ANIM_MENU] = MARIO_EYES_LOOK_LEFT
 }
 
+local table_hands2_cs = {
+    [_G.charSelect.CS_ANIM_MENU] = MARIO_HAND_FISTS
+}
 
 local HEALTH_N64MARIO_W20 = {
     label = {
@@ -105,7 +142,7 @@ local function on_character_select_load()
 
     _G.charSelect.character_add_graffiti(CT_N64MARIO_W20, get_texture_info("N64Mario_Graffiti"))
 
-    _G.charSelect.character_add_animations(E_MODEL_N64MARIO_W20, table_anims_cs, table_eye_cs, nil)
+    _G.charSelect.character_add_animations(E_MODEL_N64MARIO_W20, table_anims_cs, table_eye_cs, table_hands_cs)
 
     _G.charSelect.character_add_costume_health_meter(CT_N64MARIO_W20, 1, HEALTH_N64MARIO_W20)
 
@@ -365,3 +402,17 @@ local function on_mario_update(m)
 end
 
 hook_event(HOOK_MARIO_UPDATE, on_mario_update)
+
+
+
+
+
+hook_event(HOOK_BEFORE_SET_MARIO_ACTION, function(m)
+    if _G.charSelect.is_menu_open() == false then
+        if math.random(0,1) == 0 then
+            _G.charSelect.character_add_animations(E_MODEL_N64MARIO_W20, table_anims_cs, table_eye_cs, table_hands_cs)
+        else
+            _G.charSelect.character_add_animations(E_MODEL_N64MARIO_W20, table_anims2_cs, table_eye2_cs, table_hands2_cs)
+        end
+    end
+end)
