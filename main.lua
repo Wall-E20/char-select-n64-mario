@@ -103,7 +103,7 @@ local function on_character_select_load()
 
     _G.charSelect.character_add_palette_preset(E_MODEL_N64MARIO_W20, pal_mario_cs, "Default")
 
-    _G.charSelect.character_add_graffiti(CT_N64MARIO_W20, get_texture_info("mario-n64"))
+    _G.charSelect.character_add_graffiti(CT_N64MARIO_W20, get_texture_info("N64Mario_Graffiti"))
 
     _G.charSelect.character_add_animations(E_MODEL_N64MARIO_W20, table_anims_cs, table_eye_cs, nil)
 
